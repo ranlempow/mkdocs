@@ -102,7 +102,47 @@ def validate_config(user_config):
     pages = []
     extra_css = []
     extra_javascript = []
-    for (dirpath, dirnames, filenames) in os.walk(config['docs_dir']):
+    
+    # ranlempow add
+    # 根據檔案或資料夾的開頭數字做排列
+    def walk(top, topdown=True, onerror=None, followlinks=False, sortfunc=None, filterfunc=None):
+        islink, join, isdir = os.path.islink, os.path.join, os.path.isdir
+        
+        try:
+            # Note that listdir is global in this module due
+            # to earlier import-*.
+            names = os.listdir(top)
+        except OSError as err:
+            if onerror is not None:
+                onerror(err)
+            return
+        
+        if sortfunc:
+            names = sortfunc(names)
+        filterfunc = filterfunc or (lambda name: name)
+        
+        dirs, nondirs = [], []
+        for name in names:
+            if isdir(join(top, name)):
+                dirs.append(name)
+            else:
+                nondirs.append(name)
+
+        if topdown:
+            yield top, [filterfunc(name) for name in dirs], [filterfunc(name) for name in nondirs]
+        for name in dirs:
+            new_path = join(top, name)
+            if followlinks or not islink(new_path):
+                yield from walk(new_path, topdown, onerror, followlinks)
+        if not topdown:
+            yield top, [filterfunc(name) for name in dirs], [filterfunc(name) for name in nondirs]
+    
+    def sortfunc(li):
+        return sorted(li)
+    
+    for (dirpath, dirnames, filenames) in walk(
+            config['docs_dir'], sortfunc=sortfunc):
+        
         for filename in sorted(filenames):
             fullpath = os.path.join(dirpath, filename)
             relpath = os.path.relpath(fullpath, config['docs_dir'])

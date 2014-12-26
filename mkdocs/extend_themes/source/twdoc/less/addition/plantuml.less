@@ -1,0 +1,43 @@
+
+/* plantuml */
+
+.plantuml {
+  border-radius: @border-radius-base;
+  padding: (@line-height-computed / 2) @line-height-computed;
+  margin: 0 0 @line-height-computed;
+  background-color: white;
+  border: 1px solid @abbr-border-color;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  svg {
+    //margin: 0px auto;
+  }
+}
+
+svg {
+  
+}
+
+
+text.uml {
+  font-family: @headings-font-family;
+}
+
+rect.uml {
+  fill: #bbd;
+  stroke: #aac;
+  stroke-width: 1.6;
+}
+
+path.uml, polygon.uml {
+  stroke: #aac;
+  stroke-width: 1.0;
+}
+
+path.relate_dash {
+  stroke-dasharray: 7.0,7.0;
+}
+/* end of plantuml*/

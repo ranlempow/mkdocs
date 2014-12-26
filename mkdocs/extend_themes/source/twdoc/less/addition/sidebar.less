@@ -1,0 +1,33 @@
+.bs-sidebar {
+    background-color: @gray-lighter;
+}
+.bs-sidebar .nav > li > a,
+.bs-sidebar .nav > li > a:hover,
+.bs-sidebar .nav > li > a:focus
+{
+  color: @text-color;
+  font-weight: inherit;
+  border-right: inherit;
+}
+
+.bs-sidebar .nav > li.active > a,
+.bs-sidebar .nav > li.active > a:hover,
+.bs-sidebar .nav > li.active > a:focus
+{
+  background-color: @body-bg;
+}
+
+.bs-sidebar .nav > li > a:hover
+{
+  padding-left: 10px;
+  border-left: 10px solid @gray-light;
+  //border-right: 10px solid @gray-light;
+}
+
+.bs-sidebar .nav > li.secondary {
+  margin-left: 20px;
+}
+
+.bs-sidebar .nav > li.tertiary {
+  margin-left: 40px;
+}

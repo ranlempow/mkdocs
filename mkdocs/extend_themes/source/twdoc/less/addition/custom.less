@@ -1,0 +1,123 @@
+@font-face {
+  font-family: Lucida Grande;
+  src: url(../fonts/Lucida Grande.ttf);
+}
+
+// varibales.less
+//== Colors
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+@body-bg:               #fbfbf8;
+
+
+//== Typography
+//
+
+//## Font, line-height, and color for body text, headings, and more.
+// 可能用在標題
+@font-family-sans-serif:  "微軟正黑體", "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+@font-family-serif:       Georgia, "Times New Roman", Times, serif;
+//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+@font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
+@font-family-base:        "Lucida Grande", "Lucida Console", "Lato","Helvetica Neue",Helvetica,Arial, "微軟正黑體";
+
+@headings-font-family:    @font-family-sans-serif;
+@headings-font-weight:    800;
+@headings-line-height:    1.1;
+@headings-color:          inherit;
+
+//== Tables
+//
+//## Customizes the `.table` component with basic values, each used across all table variations.
+@table-cell-padding:      6px;
+@table-border-color:      @gray-light;
+
+//== Type
+//
+//##
+@blockquote-font-size:    @font-size-base;
+@page-header-border-color:    @gray-light;
+
+
+
+body {}
+h1, h2, h3, h4, h5, h6 {}
+.page-header {
+  margin: 0px 0px (@line-height-computed * 2);
+}
+h2 {
+  border-bottom: 1px solid @gray-light;
+  padding: 6px 0px;
+}
+blockquote {
+  border-left: inherit;   
+}
+@import "sidebar.less";
+@import "plantuml.less";
+
+
+table, tr, th, td {
+  border: 1px solid @table-border-color;
+}
+
+th {
+  background-color: @gray-light;
+}
+
+th, td {
+  padding: 3px 10px;
+}
+
+
+.admonition {
+  border-radius: @border-radius-base;
+  //margin-bottom: @padding-base-vertical;
+  //padding: @padding-base-vertical @padding-base-horizontal 0px @padding-base-horizontal;
+  padding: (@line-height-computed / 2) @line-height-computed;
+  margin: 0 0 @line-height-computed;
+  
+  p,
+  ul,
+  ol {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  &-title {
+    display: inline;
+    //margin: 0px 10px 5px 0px;
+    font-weight: bold;
+    .note & {
+      color: darken(@brand-info, 20%);
+    }
+    .see & {
+      color: darken(@brand-success, 20%);
+    }
+    .warning & {
+      color: darken(@brand-warning, 20%);
+    }
+  }
+  &-title:after {
+    content: ":";
+  }
+  &.inline p:nth-child(2) {
+    display: inline;
+  }
+  
+  &.note {
+    background-color: lighten(@brand-info, 35%);
+    border: 1px solid @brand-info;
+  }
+  &.see {
+    background-color: lighten(@brand-success, 35%);
+    border: 1px solid @brand-success;
+  }
+  &.warning {
+    background-color: lighten(@brand-warning, 35%);
+    border: 1px solid @brand-warning;
+  }
+}
+
