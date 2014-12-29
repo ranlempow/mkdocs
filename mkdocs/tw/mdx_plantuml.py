@@ -1,13 +1,15 @@
-import subprocess
 
 from markdown.util import etree
 from markdown.extensions import Extension
 from markdown.blockprocessors import BlockProcessor
 
 def parse_plantuml(puml_string):
-    
+    import os
+    import subprocess
+
+    jar_path = os.path.join(os.path.dirname(__file__), "../../bin/plantuml.jar")
     p = subprocess.Popen([
-            'java', '-jar', 'plantuml.jar', '-charset', 'utf-8', '-tsvg', '-pipe'
+            'java', '-jar', jar_path, '-charset', 'utf-8', '-tsvg', '-pipe'
         ], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     input = puml_string.encode('utf-8')
     out, err = p.communicate(input)
