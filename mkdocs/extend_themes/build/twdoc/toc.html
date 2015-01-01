@@ -1,11 +1,11 @@
 <div class="bs-sidebar hidden-print affix" role="complementary">
     <ul class="nav bs-sidenav">
     {% for toc_item in toc %}
-        <li class="main {% if toc_item.active %}active{% endif %}"><a href="#{{ toc_item.id }}">{{ toc_item.name }}</a></li>
+        <li class="main {% if toc_item.active %}active{% endif %}"><a href="#{{ toc_item.id }}">{{ toc_item.title }}</a></li>
         {% for toc_item in toc_item.children %}{% if toc_item.level == 2 %}
-            <li class="secondary"><a href="#{{ toc_item.id }}">{{ toc_item.name }}</a></li>
+            <li class="secondary"><a href="#{{ toc_item.id }}">{{ toc_item.title }}</a></li>
             {% for toc_item in toc_item.children %}{% if toc_item.level == 3 %}
-                <li class="tertiary"><a href="#{{ toc_item.id }}">{{ toc_item.name }}</a></li>
+                <li class="tertiary"><a href="#{{ toc_item.id }}">{{ toc_item.title }}</a></li>
             {% endif %}{% endfor %}
         {% endif %}{% endfor %}
     {% endfor %}

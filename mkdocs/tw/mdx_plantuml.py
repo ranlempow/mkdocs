@@ -3,7 +3,12 @@ from markdown.util import etree
 from markdown.extensions import Extension
 from markdown.blockprocessors import BlockProcessor
 
+cache = {}
+
 def parse_plantuml(puml_string):
+    if puml_string in cache:
+        return cache[puml_string]
+    
     import os
     import subprocess
 
@@ -13,12 +18,15 @@ def parse_plantuml(puml_string):
         ], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     input = puml_string.encode('utf-8')
     out, err = p.communicate(input)
+    
     if err != b'':
         print(err)
     else:
         out = out.decode('utf-8')
         # remove namespace
         out = out.replace(' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"', '')
+        # cache
+        cache[puml_string] = out
         # remove fixed style
         #out = out.replace('fill="#FEFECE"', '')
         #out = out.replace('style="stroke: #A80036; stroke-width: 1.5;"', '')

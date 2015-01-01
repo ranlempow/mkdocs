@@ -98,10 +98,10 @@ class URLContext(object):
                 # Workaround for static assets
                 return '.'
             return url.lstrip('/')
-        relative_path = posixpath.relpath(url, start=self.base_path) + suffix
+        relative_path = posixpath.relpath(url, start=self.base_path)
 
         # Under Python 2.6, relative_path adds an extra '/' at the end.
-        return relative_path.rstrip('/')
+        return relative_path.rstrip('/') + suffix
 
 
 class FileContext(object):

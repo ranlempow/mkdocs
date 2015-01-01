@@ -21,7 +21,8 @@ def monkey_patch():
 
 # copy from mkdocs.build
 class PageBuilder():
-    def __init__(self, config_file='mkdocs.yml', options=None):
+    # config_file == 'mkdocs.yml'
+    def __init__(self, config_file, options=None):
         self.options = options
         self.config_file = config_file
         self.reload_config()
@@ -78,7 +79,14 @@ class PageBuilder():
         html_content = md.convert(markdown_source)
         meta = md.Meta
         table_of_contents = md.toc_list
-
+        
+        # convert toc to other style, make mkdocs acceptable
+        def convert(parent):
+            for node in parent:
+                node['title'] = node['name']
+                convert(node['children'])
+        convert(table_of_contents)
+        
         return (html_content, table_of_contents, meta)
         
     def get_global_context(self, nav):
@@ -101,7 +109,9 @@ class PageBuilder():
         import datetime
         st = os.stat(os.path.join(config['docs_dir'], page.input_path))
         dt = datetime.datetime.fromtimestamp(st.st_mtime)
-        context['page_mtime'] = dt.isoformat()
+        
+        context['page_time'] = dt.strftime("%Y %b %d %H:%M:%S") #dt.isoformat()
+        context['page_iso_time'] = dt.isoformat()
         
         #if not page.is_homepage:
         #    context['page_description'] = None
@@ -136,11 +146,13 @@ class PageBuilder():
     def setup_site_navigation(self):
         import mkdocs.nav as nav
         self.site_navigation = nav.SiteNavigation(self.config['pages'], self.config['use_directory_urls'])
+            
         return self.site_navigation
     
     def setup_env(self):
         # setup theme
-        make_less(self.config['extend_theme'])
+        if 'extend_theme' in self.config and self.config['extend_theme'] is not None:
+            make_less(self.config['extend_theme'])
         
         import jinja2
         loader = jinja2.FileSystemLoader(self.config['theme_dir'])

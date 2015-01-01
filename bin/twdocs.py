@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../"))
 __version__ = '0.1'
 
 import mkdocs.tw.build
-import mkdocs.tw.serve_on_the_fly
+import mkdocs.tw.serve_otf
 from mkdocs.exceptions import MkDocsException
 
 def arg_to_option(arg):
@@ -24,8 +24,10 @@ def main(cmd, args, options=None):
         #config = load_config(options=options)
         #build(config, clean_site_dir=clean_site_dir)
         mkdocs.tw.build.build(args[0])
-    if cmd == 'serve':
-        mkdocs.tw.serve_on_the_fly.serve_dry(args[0])
+    elif cmd == 'serve_site':
+        mkdocs.tw.serve_otf.serve_site(args[0])
+    elif cmd == 'serve_shelf':
+         mkdocs.tw.serve_otf.serve_shelf()
     elif cmd == 'new':
         # TODO:
         #new(args, options)
