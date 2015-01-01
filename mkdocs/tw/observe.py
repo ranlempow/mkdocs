@@ -15,6 +15,10 @@ class BuildEventHandler(events.FileSystemEventHandler):
     
     def on_any_event(self, event):
         if not isinstance(event, events.DirModifiedEvent):
+            print('Reloading config file...', end='')
+            self.builder.reload_config()
+            print(' done')
+            
             print('Rebuilding documentation navigation...', end='')
             self.builder.setup_site_navigation()
             print(' done')
@@ -22,9 +26,6 @@ class BuildEventHandler(events.FileSystemEventHandler):
 class ConfigEventHandler(BuildEventHandler):
     def on_any_event(self, event):
         if os.path.abspath(event.src_path) == os.path.abspath(self.builder.config['config_file']):
-            print('Reloading config file...', end='')
-            self.builder.reload_config()
-            print(' done')
             super(ConfigEventHandler, self).on_any_event(event)
             
             
