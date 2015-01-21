@@ -27,7 +27,7 @@ def main(cmd, args, options=None):
     elif cmd == 'serve_site':
         mkdocs.tw.serve_otf.serve_site(args[0])
     elif cmd == 'serve_shelf':
-         mkdocs.tw.serve_otf.serve_shelf()
+        mkdocs.tw.serve_otf.serve_shelf()
     elif cmd == 'new':
         # TODO:
         #new(args, options)

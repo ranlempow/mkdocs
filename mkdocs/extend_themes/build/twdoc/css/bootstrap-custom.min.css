@@ -6559,33 +6559,6 @@ blockquote {
 .bs-sidebar .nav > li.tertiary {
   margin-left: 40px;
 }
-/* plantuml */
-.plantuml {
-  border-radius: 4px;
-  padding: 10.5px 21px;
-  margin: 0 0 21px;
-  background-color: white;
-  border: 1px solid #b4bcc2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-text.uml {
-  font-family: "微軟正黑體", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-rect.uml {
-  fill: #bbd;
-  stroke: #aac;
-  stroke-width: 1.6;
-}
-path.uml,
-polygon.uml {
-  stroke: #aac;
-  stroke-width: 1.0;
-}
-path.relate_dash {
-  stroke-dasharray: 7.0,7.0;
-}
 table,
 tr,
 th,

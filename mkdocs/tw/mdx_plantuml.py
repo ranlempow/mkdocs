@@ -63,6 +63,7 @@ class PlantUMLProcessor(BlockProcessor):
                 blocks.remove(block)
             
             et = etree.fromstring(parse_plantuml(puml_string))
+            '''
             for elem in et.iter():
                 if elem.tag == 'rect' \
                   and elem.get('style', '') == "stroke: #A80036; stroke-width: 1.5;" \
@@ -88,7 +89,7 @@ class PlantUMLProcessor(BlockProcessor):
                   and elem.get('style', '') == "stroke: #A80036; stroke-width: 1.0;":
                     clearElement(elem)
                     elem.set('class', 'uml arrow')
-                    
+            ''' 
             div = etree.SubElement(parent, 'div')
             div.set('class', 'plantuml')
             div.append(et)

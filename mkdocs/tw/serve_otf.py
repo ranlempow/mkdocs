@@ -86,8 +86,7 @@ def serve_site(config_file, options=None):
     host, port = config['dev_addr'].split(':', 1)
     serve_common([builder], app, host, int(port), homepage='index.html')
 
-
-def serve_shelf(config_files=None, options=None):
+def make_app_shelf(config_files=None, options=None):
     import mkdocs.tw.build
     import mkdocs.tw.discovery
     mkdocs.tw.build.monkey_patch()
@@ -98,6 +97,8 @@ def serve_shelf(config_files=None, options=None):
     from bottle import Bottle
     root_app = Bottle()
     
+    #host = None #'127.0.0.1' #'localhost'
+   # port = None #8080
     for site in shalf.walk_sites():
         from mkdocs.tw.observe import observe
         site.setup_site_navigation()
@@ -108,8 +109,6 @@ def serve_shelf(config_files=None, options=None):
         app = make_app(site)
         root_app.mount(prefix=site.config['site_name'], app=app)
         
-        # TODO:
-        host, port = site.config['dev_addr'].split(':', 1)
     
     @root_app.route('/index.html', method="GET")
     def homepage():
@@ -118,6 +117,11 @@ def serve_shelf(config_files=None, options=None):
             links.append('<a href="{0}/index.html">{0}</a><br>'.format(site.config['site_name']))
         return ''.join(links)
     
-    print(root_app)
+    #print(root_app)
+    return root_app, shalf
     
+def serve_shelf(config_files=None, options=None):
+    root_app, shalf = make_app_shelf(config_files, options)
+    for site in shalf.walk_sites():
+        host, port = site.config['dev_addr'].split(':', 1)
     serve_common(list(shalf.walk_sites()) ,root_app, host, int(port), homepage='index.html')

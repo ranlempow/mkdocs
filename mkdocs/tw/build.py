@@ -5,7 +5,7 @@ def monkey_patch():
     # patch open() for supproting utf8 
     _open = __builtins__['open']
     def utf8open(*args):
-        if 'b' not in args[1]: 
+        if len(args) > 1 and 'b' not in args[1]: 
             return _open(*args, encoding='utf8')
         else:
             return _open(*args)
@@ -55,8 +55,15 @@ class PageBuilder():
             
         # import specific "twdoc" markdown extensions
         import importlib
-        exts = ['extra', 'def_list']
-        for mdx in ('bootstrap', 'plantuml', 'admonition2', 'mytoc', 'removeth'):
+        exts = [
+                'smart_strong',
+                'footnotes',
+                'attr_list',
+                'def_list',
+                'abbr',
+                ]
+        for mdx in ('bootstrap', 'plantuml', 'admonition2', 'mytoc', 'removeth',#'prettyprint',
+                    'fenced_code2'):
             m = importlib.import_module('mkdocs.tw.mdx_' + mdx)
             exts.append(m.makeExtension())
         config['markdown_extensions'] = exts
@@ -70,7 +77,7 @@ class PageBuilder():
         import markdown
         from mkdocs.relative_path_ext import RelativePathExtension
         # Generate the HTML from the markdown source
-        builtin_extensions = ['meta', 'toc', 'tables', 'fenced_code']
+        builtin_extensions = ['meta', 'toc', 'tables']
         mkdocs_extensions = [RelativePathExtension(site_navigation, strict), ]
         extensions = builtin_extensions + mkdocs_extensions + list(extensions)
         md = markdown.Markdown(
