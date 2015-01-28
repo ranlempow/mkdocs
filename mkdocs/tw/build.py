@@ -1,23 +1,40 @@
 # coding: utf-8
 import os
 
+monkey_patched = False
 def monkey_patch():
-    # patch open() for supproting utf8 
-    _open = __builtins__['open']
-    def utf8open(*args):
-        if len(args) > 1 and 'b' not in args[1]: 
-            return _open(*args, encoding='utf8')
-        else:
-            return _open(*args)
-    __builtins__['open'] = utf8open
+    global monkey_patched
+    if not monkey_patched:
+        # patch open() for supproting utf8 
+        _open = __builtins__['open']
+        def utf8open(*args):
+            if len(args) > 1 and 'b' not in args[1]: 
+                return _open(*args, encoding='utf8')
+            else:
+                return _open(*args)
+        __builtins__['open'] = utf8open
 
-    # patch relpath() for supproting windows slash
-    import os
-    _relpath = os.path.relpath
-    def win_relpath(*args):
-        return _relpath(*args).replace('\\', '/')
-    os.path.relpath = win_relpath
+        # patch relpath() for supproting windows slash
+        import os
+        _relpath = os.path.relpath
+        def win_relpath(*args):
+            return _relpath(*args).replace('\\', '/')
+        os.path.relpath = win_relpath
+        
 
+        # 注入 headerid
+        # 修正 url 的 fragment 部分會把中文砍掉的問題
+        import markdown.extensions.headerid
+        def slugify(value, separator):
+            import re
+            """ Slugify a string, to make it URL friendly. """
+            
+            #value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
+            value = re.sub('[^\w\s-]', '', value).strip().lower()
+            return re.sub('[%s\s]+' % separator, separator, value)
+        markdown.extensions.headerid.slugify = slugify
+    
+    monkey_patched = True
 
 # copy from mkdocs.build
 class PageBuilder():

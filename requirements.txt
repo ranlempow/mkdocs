@@ -3,3 +3,5 @@ Markdown>=2.3.1,<2.5
 PyYAML>=3.10
 watchdog>=0.7.0
 ghp-import>=0.4.1
+waitress==0.8.9
+bottle>=0.12.8,<0.13

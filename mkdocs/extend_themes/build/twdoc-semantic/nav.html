@@ -1,0 +1,62 @@
+
+<div class="ui menu">
+    <div class="item">
+        <a class="navbar-brand" href="{{ homepage_url }}">{{ site_name }}</a>
+    </div>
+
+    {% for nav_item in nav %}
+      {% if nav_item.children %}
+          <div class="ui dropdown item{% if nav_item.active %} {% endif %}">
+              <i class="dropdown icon"></i>
+              {{ nav_item.title }}
+              <div class="menu">
+              {% for nav_item in nav_item.children %}
+                  <a class="item{% if nav_item.active %} active{% endif %}"
+                     href="{{ nav_item.url }}">{{ nav_item.title }}</a>
+              {% endfor %}
+              </div>
+          </div>
+      {% else %}
+          {% if nav_item.title %}
+                  <a class="item{% if nav_item.active %} active{% endif %}"
+                     href="{{ nav_item.url }}">{{ nav_item.title }}</a>
+          {% endif %}
+      {% endif %}
+    {% endfor %}
+
+
+
+    <div class="right menu">
+    
+        {% if include_search %}
+        <li>
+            <a href="#searchModal" data-toggle="modal"><i class="fa fa-search"></i> Search</a>
+        </li>
+        {% endif %}
+        
+        <a class="icon item{% if not previous_page %} disabled{% endif %}" 
+                {% if previous_page %}href="{{ previous_page.url }}"{% endif %}>
+            <i class="left chevron icon"></i>
+        </a>
+        
+        <a class="icon item{% if not next_page %} disabled{% endif %}" 
+                {% if next_page %}href="{{ next_page.url }}"{% endif %}>
+            <i class="right chevron icon"></i>
+        </a>
+        
+        <!--
+        {% if repo_url %}
+        <li>
+            <a href="{{ repo_url }}">
+                {% if repo_name == 'GitHub' %}
+                    <i class="fa fa-github"></i>
+                {% elif repo_name == 'Bitbucket' %}
+                    <i class="fa fa-bitbucket"></i>
+                {% endif %}
+                {{ repo_name }}
+            </a>
+        </li>
+        {% endif %}
+        -->
+    </div>
+</div>

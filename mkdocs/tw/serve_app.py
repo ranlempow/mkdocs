@@ -7,32 +7,19 @@ def make_app(builder):
     
     app = Bottle()
     
-    if builder.config['use_directory_urls']:
-        @app.route('/<docname:path>/', method="GET")
-        def mkdocs(docname):
-            output_content = None
-            for page in builder.site_navigation.walk_pages():
-                if page.abs_url == ('/' if docname else '') + docname + '/':
-                    context, output_content = builder.make_one(
-                            page, builder.site_navigation, builder.env)
-            
-            if output_content is None:
-                abort(404, "No such docs")
-            else:
-                return output_content
-    else:
-        @app.route('/<docname:path>/index.html', method="GET")
-        def mkdocs(docname):
-            output_content = None
-            for page in builder.site_navigation.walk_pages():
-                if page.abs_url == ('/' if docname else '') + docname + '/index.html':
-                    context, output_content = builder.make_one(
-                            page, builder.site_navigation, builder.env)
-            
-            if output_content is None:
-                abort(404, "No such docs")
-            else:
-                return output_content
+    tail = '/' if builder.config['use_directory_urls'] else '/index.html'
+    @app.route('/<docname:path>' + tail, method="GET")
+    def mkdocs(docname):
+        output_content = None
+        for page in builder.site_navigation.walk_pages():
+            if page.abs_url == ('/' if docname else '') + docname + tail:
+                context, output_content = builder.make_one(
+                        page, builder.site_navigation, builder.env)
+        
+        if output_content is None:
+            abort(404, "No such docs")
+        else:
+            return output_content
     
     @app.route('/', method="GET")
     @app.route('/index.html', method="GET")

@@ -1,7 +1,23 @@
 @font-face {
-  font-family: Lucida Grande;
-  src: url(../fonts/Lucida Grande.ttf);
+  font-family: "Lucida Grande";
+  src: url("../fonts/Lucida Grande.ttf");
 }
+
+// Bold Medium Regular DemiLight Light
+@font-face {
+    font-family: NotoSansCJKtc;
+    font-style: normal;
+    font-weight: bold;
+    src: url(../fonts/NotoSansCJKtc-Bold.otf);
+}
+
+@font-face {
+    font-family: NotoSansCJKtc;
+    font-style: normal;
+    font-weight: normal;
+    src: url(../fonts/NotoSansCJKtc-Light.otf);
+}
+
 
 // varibales.less
 //== Colors
@@ -21,7 +37,10 @@
 @font-family-serif:       Georgia, "Times New Roman", Times, serif;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
-@font-family-base:        "Lucida Grande", "Lucida Console", "Lato","Helvetica Neue",Helvetica,Arial, "微軟正黑體";
+@font-family-base:        "Lucida Grande", "Lucida Console", "Lato","Helvetica Neue",Helvetica,Arial, NotoSansCJKtc, "微軟正黑體";
+
+@font-size-base:          18px;
+@line-height-base:        1.55;
 
 @headings-font-family:    @font-family-sans-serif;
 @headings-font-weight:    800;
@@ -41,7 +60,9 @@
 @page-header-border-color:    @gray-light;
 
 
-body {}
+body {
+  letter-spacing: @font-size-base * 0.025;
+}
 h1, h2, h3, h4, h5, h6 {}
 .page-header {
   margin: 0px 0px (@line-height-computed * 2);
@@ -50,8 +71,24 @@ h2 {
   border-bottom: 1px solid @gray-light;
   padding: 6px 0px;
 }
+strong {
+  //font-weight: 900;
+  //font-family: "Lucida Grande", "Lucida Console", "Lato","Helvetica Neue",Helvetica,Arial, CustomHeaderFont;
+}
+em {
+  font-style: normal;
+  text-decoration: underline;
+}
 blockquote {
   border-left: inherit;   
+}
+pre code {
+  font-size: 15px;
+  letter-spacing: normal;
+  
+}
+pre {
+  line-height: 1;
 }
 @import "sidebar.less";
 @import "plantuml.less";

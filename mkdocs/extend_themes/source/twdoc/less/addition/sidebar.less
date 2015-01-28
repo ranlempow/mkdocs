@@ -17,6 +17,10 @@
   background-color: @body-bg;
 }
 
+.bs-sidebar .nav > li > a {
+  padding: 1px 20px;
+}
+
 .bs-sidebar .nav > li > a:hover
 {
   padding-left: 10px;
@@ -30,4 +34,10 @@
 
 .bs-sidebar .nav > li.tertiary {
   margin-left: 40px;
+}
+
+@media (min-width: 1200px) {
+  .container .bs-sidebar.affix-bottom, .container .bs-sidebar.affix {
+    width: 300px;
+  }
 }

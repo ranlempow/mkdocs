@@ -63,6 +63,11 @@ class PlantUMLProcessor(BlockProcessor):
                 blocks.remove(block)
             
             et = etree.fromstring(parse_plantuml(puml_string))
+            for elem in et.iter():
+                if elem.tag == 'text':
+                    clearElement(elem)
+                    elem.set('class', 'uml text')
+                    
             '''
             for elem in et.iter():
                 if elem.tag == 'rect' \

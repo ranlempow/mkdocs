@@ -1,0 +1,27 @@
+<!--
+<div class="bs-sidebar hidden-print affix" role="complementary">
+    <ul class="nav bs-sidenav">
+    {% for toc_item in toc %}
+        <li class="main {% if toc_item.active %}active{% endif %}"><a href="#{{ toc_item.id }}">{{ toc_item.title }}</a></li>
+        {% for toc_item in toc_item.children %}{% if toc_item.level == 2 %}
+            <li class="secondary"><a href="#{{ toc_item.id }}">{{ toc_item.title }}</a></li>
+            {% for toc_item in toc_item.children %}{% if toc_item.level == 3 %}
+                <li class="tertiary"><a href="#{{ toc_item.id }}">{{ toc_item.title }}</a></li>
+            {% endif %}{% endfor %}
+        {% endif %}{% endfor %}
+    {% endfor %}
+    </ul>
+</div>
+-->
+
+<div class="ui secondary vertical pointing menu">
+  {% for toc_item in toc %}
+      <a class="main item" href="#{{ toc_item.id }}">{{ toc_item.title }}</a>
+      {% for toc_item in toc_item.children %}{% if toc_item.level == 2 %}
+          <a class="secondary item" href="#{{ toc_item.id }}">{{ toc_item.title }}</a>
+          {% for toc_item in toc_item.children %}{% if toc_item.level == 3 %}
+              <a class="tertiary item" href="#{{ toc_item.id }}">{{ toc_item.title }}</a>
+          {% endif %}{% endfor %}
+      {% endif %}{% endfor %}
+  {% endfor %}
+</div>
