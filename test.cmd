@@ -1,1 +1,0 @@
-python "bin/twdocs.py" serve "C:\Users\ran\Google 雲端硬碟\分數交易系統\doc\mkdocs.yml"
