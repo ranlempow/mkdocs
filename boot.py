@@ -77,15 +77,13 @@ def install_requirements():
                 #show_stdout=False,
             )
     
-def inject_logger():
-    from virtualenv import Logger
-    global logger
-    logger = Logger([
-        (Logger.level_for_integer(1), sys.stdout),
-        (Logger.level_for_integer(1), open('boot.log', 'w')),
-    ])
-    import virtualenv
-    virtualenv.logger = logger
+def install_command():
+    open(os.path.join(home_dir, 'Scripts', 'help.cmd'), 'w').write(
+                "python boot.py")
+    
+    for cmd in bootconfig['cmd']:
+        open(os.path.join(home_dir, 'Scripts', cmd + '.cmd'), 'w').write(
+                "python boot.py " + cmd)
     
 def install():
     from virtualenv import file_search_dirs, create_environment
@@ -98,8 +96,22 @@ def install():
     
     download_from_uci()
     install_requirements()
+    install_command()
+def upadte():
+    download_from_uci()
+    install_requirements()
+    install_command()
     
-    
+def inject_logger():
+    from virtualenv import Logger
+    global logger
+    logger = Logger([
+        (Logger.level_for_integer(1), sys.stdout),
+        (Logger.level_for_integer(1), open('boot.log', 'w')),
+    ])
+    import virtualenv
+    virtualenv.logger = logger
+
 def main():
     inject_logger()
     
@@ -122,12 +134,12 @@ update - 更新(可以在 git pull 之後使用)
     elif sys.argv[1] == 'install':
         install()
     elif sys.argv[1] == 'update':
-        install()
+        upadte()
     else:
         if sys.argv[1] in bootconfig['cmd']:
             call_subprocess(
                 cmd=bootconfig['cmd'][sys.argv[1]],
-                cwd=os.path.abspath(home_dir),
+                cwd=os.path.abspath(base_dir),
             )
         else:
             show_help()
